@@ -34,16 +34,7 @@ export const useGameStore = defineStore('game', () => {
     const _answer = generate(
       { minLength: 5, maxLength: 5 }
     ) as string
-    answer.value = _answer
-  }
-
-  function submitGuess () {
-    /**
-     * @todo
-     * check if guess is 5 letters
-     * check if guess is a word
-     */
-    guessCount.value++
+    answer.value = _answer.toUpperCase()
   }
 
   return {
@@ -51,7 +42,6 @@ export const useGameStore = defineStore('game', () => {
     currentGuess,
     generateAnswer,
     guessCount,
-    guesses,
-    submitGuess
+    guesses
   }
 })

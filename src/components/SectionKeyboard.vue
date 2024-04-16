@@ -35,6 +35,14 @@ function updateCurrentGuess (letter: string) {
     guesses.value[guessCount.value] = currentGuess.value + letter
   }
 }
+
+function submitGuess () {
+  /**
+   * @todo
+   * check if guess is a word
+   */
+  guessCount.value++
+}
 </script>
 
 <template>
@@ -70,7 +78,7 @@ function updateCurrentGuess (letter: string) {
       <ion-button
         color="success"
         class="submit"
-        @click="gameStore.submitGuess()"
+        @click="submitGuess()"
       >
         Submit
       </ion-button>

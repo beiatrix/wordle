@@ -10,21 +10,25 @@ import { storeToRefs } from 'pinia'
 import { useGameStore } from '@/store/game'
 
 const gameStore = useGameStore()
-const { guessCount, guesses } = storeToRefs(gameStore)
+const { 
+  answer,
+  guessCount, 
+  guesses 
+} = storeToRefs(gameStore)
 
 function getTileClasses (
   guess: string, 
   letterIndex: number, 
   wordIndex: number
 ) {
-  /**
-   * @todo delete
-   */
-  console.log('tile classes', {
-    guess, letterIndex, wordIndex, guessCount: guessCount.value
-  })
   if (guess && (wordIndex < guessCount.value)) {
-    return 'fill'
+    if (answer.value[letterIndex - 1] === guess[letterIndex - 1]) {
+      return 'success'
+    } else if (answer.value.includes(guess[letterIndex - 1])) {
+      return 'warning'
+    } else { 
+      return 'fill'
+    }
   }
   if (guess[letterIndex - 1]) {
     return 'outline'
@@ -73,6 +77,16 @@ function getTileClasses (
 
 .fill {
   background-color: var(--ion-color-taupe-grey);
-  color: white;
+  color: var(--ion-color-light);
+}
+
+.success {
+  background-color: var(--ion-color-jade);
+  color: var(--ion-color-forest);
+}
+
+.warning {
+  background-color: var(--ion-color-mustard);
+  color: var(--ion-color-primary);
 }
 </style>
