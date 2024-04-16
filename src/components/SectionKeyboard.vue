@@ -45,11 +45,11 @@ ion-button {
 }
 
 .letter {
-  margin: 0.2rem;
-  height: 3rem;
+  margin: 0 0.5rem;
+  height: 3.5rem;
   width: 2rem;
-  font-family: 'Karla', sans-serif;
-  font-size: 1rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 1.25rem;
   font-weight: 700;
   color: var(--ion-color-primary);
 }
