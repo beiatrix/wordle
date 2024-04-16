@@ -12,6 +12,16 @@ import {
 import AppBar from '@/components/AppBar.vue'
 import SectionKeyboard from '@/components/SectionKeyboard.vue'
 import SectionTiles from '@/components/SectionTiles.vue'
+
+// store
+import { useGameStore } from '@/store/game'
+import { storeToRefs } from 'pinia'
+
+const gameStore = useGameStore()
+const { answer } = storeToRefs(gameStore)
+
+gameStore.generateAnswer()
+console.log('gamesStore', answer.value)
 </script>
 
 <template>
