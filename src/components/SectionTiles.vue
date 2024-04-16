@@ -18,7 +18,7 @@ import {
           v-for="_j in 5"
           class="box"
         >
-          A
+           
         </div>
       </ion-row>
     </ion-col>
@@ -32,10 +32,10 @@ import {
   align-items: center;
   height: 3.75rem;
   width: 3.75rem;
-  border: 0.2rem solid lightgrey;
-  border-radius: 0.5rem;
+  background-color: rgba(var(--ion-color-taupe-grey-rgb), 0.5);
+  border-radius: 0.25rem;
   margin: 0.25rem;
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Karla', sans-serif;
   font-size: 2rem;
   font-weight: 700;
 }

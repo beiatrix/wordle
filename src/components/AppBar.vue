@@ -9,25 +9,22 @@ import {
 
 <template>
   <ion-header
-    class="ion-no-border"
+    class="ion-no-border ion-margin-bottom"
     :translucent="true"
   >
-    <ion-toolbar>
+    <ion-toolbar color="hunter">
       <ion-title class="ion-text-center ion-margin">
-        Wordle!
+        Wordle
       </ion-title>
     </ion-toolbar>
   </ion-header>
 </template>
 
 <style scoped>
-ion-header {
-  border-bottom: 0.1rem solid lightgrey;
-}
-
 ion-title {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Karla', sans-serif;
   font-size: 2rem;
   font-weight: 700;
+  color: var(--ion-color-forest);
 }
 </style>

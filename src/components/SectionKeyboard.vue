@@ -7,7 +7,7 @@ import {
 } from '@ionic/vue'
 
 // config
-import { keyboard } from '@/config/keyboard.js'
+import { keyboard } from '@/config/keyboard'
 </script>
 
 <template>
@@ -18,10 +18,10 @@ import { keyboard } from '@/config/keyboard.js'
     >
       <ion-button 
         v-for="letter in row"
+        color="almond"
         class="letter"
-        color="success"
       >
-        {{ letter  }}
+        {{ letter }}
       </ion-button>
     </ion-col>
     <ion-col
@@ -29,10 +29,10 @@ import { keyboard } from '@/config/keyboard.js'
       size="12"
     >
       <ion-button
-        class="submit"
         color="success"
+        class="submit"
       >
-        SUBMIT
+        Submit
       </ion-button>
     </ion-col>
   </ion-row>
@@ -40,7 +40,7 @@ import { keyboard } from '@/config/keyboard.js'
 
 <style scoped>
 ion-button {
-  --border-radius: 0.5rem;
+  --border-radius: 0.25rem;
   --box-shadow: none;
 }
 
@@ -48,15 +48,18 @@ ion-button {
   margin: 0.2rem;
   height: 3rem;
   width: 2rem;
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Karla', sans-serif;
   font-size: 1rem;
   font-weight: 700;
+  color: var(--ion-color-primary);
 }
 
 .submit {
   height: 3.5rem;
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Karla', sans-serif;
   font-size: 2rem;
   font-weight: 700;
+  text-transform: uppercase;
+  color: var(--ion-color-forest);
 }
 </style>

@@ -18,7 +18,7 @@ import SectionTiles from '@/components/SectionTiles.vue'
   <ion-page>
     <AppBar />
 
-    <ion-content :fullscreen="true">
+    <ion-content :fullscreen="true" color="dun-tint">
       <ion-grid class="container">
         <ion-row class="ion-justify-content-center row">
           <ion-col
