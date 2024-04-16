@@ -3,25 +3,64 @@
 import {
   IonButton,
   IonCol,
+  IonIcon,
   IonRow
 } from '@ionic/vue'
+import { backspace } from 'ionicons/icons'
 
 // config
 import { keyboard } from '@/config/keyboard'
+
+// store
+import { storeToRefs } from 'pinia'
+import { useGameStore } from '@/store/game'
+
+const gameStore = useGameStore()
+const { 
+  currentGuess,
+  guessCount,
+  guesses
+} = storeToRefs(gameStore)
+
+function updateCurrentGuess (letter: string) {
+  if (!letter) {
+    // backspace
+    guesses.value[guessCount.value] = currentGuess.value.slice(0, -1)
+  } else {
+    // stop if > word length limit
+    if (currentGuess.value.length === 5) {
+      return
+    }  
+    // add letter
+    guesses.value[guessCount.value] = currentGuess.value + letter
+  }
+}
 </script>
 
 <template>
   <ion-row>
     <ion-col
-      v-for="row of keyboard"
+      v-for="(row, index) of keyboard"
       size="12"
     >
       <ion-button 
         v-for="letter in row"
         color="almond"
-        class="letter"
+        class="btn-letter"
+        @click="updateCurrentGuess(letter)"
       >
         {{ letter }}
+      </ion-button>
+      <ion-button 
+        v-if="index == 3"
+        color="almond"
+        class="btn-backspace"
+        @click="updateCurrentGuess('')"
+      >
+        <ion-icon 
+          :icon="backspace"
+          color="primary"
+        />
       </ion-button>
     </ion-col>
     <ion-col
@@ -31,6 +70,7 @@ import { keyboard } from '@/config/keyboard'
       <ion-button
         color="success"
         class="submit"
+        @click="gameStore.submitGuess()"
       >
         Submit
       </ion-button>
@@ -44,7 +84,7 @@ ion-button {
   --box-shadow: none;
 }
 
-.letter {
+.btn-letter {
   margin: 0 0.5rem;
   height: 3.5rem;
   width: 2rem;
@@ -52,6 +92,11 @@ ion-button {
   font-size: 1.25rem;
   font-weight: 700;
   color: var(--ion-color-primary);
+}
+
+.btn-backspace {
+  margin: 0 0.5rem;
+  height: 3.5rem;
 }
 
 .submit {

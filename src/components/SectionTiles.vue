@@ -4,21 +4,47 @@ import {
   IonCol,
   IonRow
 } from '@ionic/vue'
+
+// store
+import { storeToRefs } from 'pinia'
+import { useGameStore } from '@/store/game'
+
+const gameStore = useGameStore()
+const { guessCount, guesses } = storeToRefs(gameStore)
+
+function getTileClasses (
+  guess: string, 
+  letterIndex: number, 
+  wordIndex: number
+) {
+  /**
+   * @todo delete
+   */
+  console.log('tile classes', {
+    guess, letterIndex, wordIndex, guessCount: guessCount.value
+  })
+  if (guess && (wordIndex < guessCount.value)) {
+    return 'fill'
+  }
+  if (guess[letterIndex - 1]) {
+    return 'outline'
+  }
+}
 </script>
 
 <template>
   <ion-row>
     <ion-col
-      v-for="_i in 6"
+      v-for="(guess, wordIndex) in guesses"
       class="ion-no-padding"
       size="12"
     >
       <ion-row class="ion-justify-content-center">
         <div
-          v-for="_j in 5"
-          class="box"
+          v-for="letterIndex in 5"
+          :class="`box ${getTileClasses(guess, letterIndex, wordIndex)}`"
         >
-           
+          {{ guess[letterIndex - 1] }}
         </div>
       </ion-row>
     </ion-col>
@@ -38,5 +64,15 @@ import {
   font-family: 'Karla', sans-serif;
   font-size: 2rem;
   font-weight: 700;
+  color: var(--ion-color-primary-tint);
+}
+
+.outline {
+  border: 3px solid var(--ion-color-taupe-grey);
+}
+
+.fill {
+  background-color: var(--ion-color-taupe-grey);
+  color: white;
 }
 </style>

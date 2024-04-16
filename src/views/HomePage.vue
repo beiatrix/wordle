@@ -21,6 +21,10 @@ const gameStore = useGameStore()
 const { answer } = storeToRefs(gameStore)
 
 gameStore.generateAnswer()
+
+/**
+ * @todo delete
+ */
 console.log('gamesStore', answer.value)
 </script>
 
