@@ -9,6 +9,10 @@ import {
 import { storeToRefs } from 'pinia'
 import { useGameStore } from '@/store/game'
 
+/**
+ * store
+ * ==================================================================
+ */
 const gameStore = useGameStore()
 const { 
   answer,
@@ -16,7 +20,11 @@ const {
   guesses 
 } = storeToRefs(gameStore)
 
-function getTileClasses (
+/**
+ * methods
+ * ==================================================================
+ */
+function getTileClass (
   guess: string, 
   letterIndex: number, 
   wordIndex: number
@@ -46,7 +54,7 @@ function getTileClasses (
       <ion-row class="ion-justify-content-center">
         <div
           v-for="letterIndex in 5"
-          :class="`box ${getTileClasses(guess, letterIndex, wordIndex)}`"
+          :class="`box ${getTileClass(guess, letterIndex, wordIndex)}`"
         >
           {{ guess[letterIndex - 1] }}
         </div>

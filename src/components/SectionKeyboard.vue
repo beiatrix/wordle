@@ -7,6 +7,7 @@ import {
   IonRow
 } from '@ionic/vue'
 import { backspace } from 'ionicons/icons'
+import { ref } from 'vue'
 
 // config
 import { keyboard } from '@/config/keyboard'
@@ -15,12 +16,81 @@ import { keyboard } from '@/config/keyboard'
 import { storeToRefs } from 'pinia'
 import { useGameStore } from '@/store/game'
 
+/**
+ * store
+ * ==================================================================
+ */
 const gameStore = useGameStore()
 const { 
+  answer,
   currentGuess,
   guessCount,
   guesses
 } = storeToRefs(gameStore)
+
+/**
+ * state
+ * ==================================================================
+ */
+const guessedLetters = ref('')
+const partiallyCorrectLetters = ref('')
+const totallyCorrectLetters = ref('')
+
+/**
+ * methods
+ * ==================================================================
+ */
+function getButtonColor (
+  letter: string
+) {
+  if (totallyCorrectLetters.value.includes(letter)) {
+    return 'jade'
+  } else if (partiallyCorrectLetters.value.includes(letter)) {
+    return 'mustard'
+  } else {
+    return 'almond'
+  }
+}
+
+function getDisabled (letter: string) {
+  return (
+    !answer.value.includes(letter) && 
+    guessedLetters.value.includes(letter)
+  )
+}
+
+function submitGuess () {
+  /**
+   * @todo
+   * - check if guess is a word
+   * - instructions dialog
+   * - win dialog
+   */
+
+  for (let i = 0; i < 5; i++) {
+    const currentLetter = currentGuess.value[i]
+    if (
+      // totally correct guess
+      currentLetter === answer.value[i] && 
+      !totallyCorrectLetters.value.includes(currentLetter)
+    ) {
+      totallyCorrectLetters.value += currentLetter
+      partiallyCorrectLetters.value = partiallyCorrectLetters.value.replace(
+        currentLetter, ''
+      ) 
+    } else if (
+      // partially correct guess
+      answer.value.includes(currentLetter) &&
+      !partiallyCorrectLetters.value.includes(currentLetter) &&
+      !totallyCorrectLetters.value.includes(currentLetter)
+    ) {
+      partiallyCorrectLetters.value += currentLetter
+    }
+  }
+  
+  guessedLetters.value += currentGuess.value
+  guessCount.value++
+}
 
 function updateCurrentGuess (letter: string) {
   if (!letter) {
@@ -35,14 +105,6 @@ function updateCurrentGuess (letter: string) {
     guesses.value[guessCount.value] = currentGuess.value + letter
   }
 }
-
-function submitGuess () {
-  /**
-   * @todo
-   * check if guess is a word
-   */
-  guessCount.value++
-}
 </script>
 
 <template>
@@ -53,8 +115,9 @@ function submitGuess () {
     >
       <ion-button 
         v-for="letter in row"
-        color="almond"
+        :color="getButtonColor(letter)"
         class="btn-letter"
+        :disabled="getDisabled(letter)"
         @click="updateCurrentGuess(letter)"
       >
         {{ letter }}
