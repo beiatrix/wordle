@@ -1,0 +1,9 @@
+ion-toast.custom-toast {
+  --background: rgba(0, 0, 0, 0.8);
+  --width: 20vw;
+}
+
+ion-toast.custom-toast::part(message) {
+  font-size: 1.1rem;
+  margin: auto;
+}

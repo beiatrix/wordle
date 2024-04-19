@@ -4,7 +4,8 @@ import {
   IonButton,
   IonCol,
   IonIcon,
-  IonRow
+  IonRow,
+  toastController
 } from '@ionic/vue'
 import { backspace } from 'ionicons/icons'
 import { ref } from 'vue'
@@ -59,13 +60,30 @@ function getDisabled (letter: string) {
   )
 }
 
-function submitGuess () {
+async function presentToast (message: string) {
+  const toast = await toastController.create({
+    message,
+    position: 'middle',
+    duration: 1500, 
+    cssClass: 'custom-toast'
+  })
+
+  await toast.present()
+}
+
+async function submitGuess () {
+
   /**
    * @todo
    * - check if guess is a word
    * - instructions dialog
    * - win dialog
    */
+
+  if (currentGuess.value?.length < 5) {
+    await presentToast('Not enough letters')
+    return
+  }
 
   for (let i = 0; i < 5; i++) {
     const currentLetter = currentGuess.value[i]
