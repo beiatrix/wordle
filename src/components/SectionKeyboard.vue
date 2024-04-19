@@ -71,20 +71,34 @@ async function presentToast (message: string) {
   await toast.present()
 }
 
+async function lookupWord (word: string) {
+  try {
+    const response = await fetch(
+      `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`
+    )
+    const result = await response.json()
+    if (Array.isArray(result) && result.length) {
+      return true
+    } else {
+      return false
+    }
+  } catch (error) {
+    return false
+  }
+}
+
 async function submitGuess () {
-
-  /**
-   * @todo
-   * - check if guess is a word
-   * - instructions dialog
-   * - win dialog
-   */
-
   if (currentGuess.value?.length < 5) {
     await presentToast('Not enough letters')
     return
   }
 
+  const isWord = await lookupWord(currentGuess.value)
+  if (!isWord) {
+    await presentToast('Not in word list')
+    return 
+  }
+  
   for (let i = 0; i < 5; i++) {
     const currentLetter = currentGuess.value[i]
     if (

@@ -1,9 +1,12 @@
 ion-toast.custom-toast {
-  --background: rgba(0, 0, 0, 0.8);
-  --width: 20vw;
+  --background: var(--ion-color-danger);
+  --border-radius: 0.5rem;
+  --height: 4rem;
+  --width: 300px;
+  font-family: 'Karla', sans-serif;
 }
 
 ion-toast.custom-toast::part(message) {
-  font-size: 1.1rem;
+  font-size: 1.25rem;
   margin: auto;
 }
