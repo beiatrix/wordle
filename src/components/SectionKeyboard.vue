@@ -48,16 +48,14 @@ function getButtonColor (
     return 'jade'
   } else if (partiallyCorrectLetters.value.includes(letter)) {
     return 'mustard'
+  } else if (
+    !answer.value.includes(letter) && 
+    guessedLetters.value.includes(letter)
+  ) {
+    return 'taupe-grey'
   } else {
     return 'almond'
   }
-}
-
-function getDisabled (letter: string) {
-  return (
-    !answer.value.includes(letter) && 
-    guessedLetters.value.includes(letter)
-  )
 }
 
 async function presentToast (message: string) {
@@ -149,7 +147,6 @@ function updateCurrentGuess (letter: string) {
         v-for="letter in row"
         :color="getButtonColor(letter)"
         class="btn-letter"
-        :disabled="getDisabled(letter)"
         @click="updateCurrentGuess(letter)"
       >
         {{ letter }}
