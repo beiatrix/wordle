@@ -4,6 +4,7 @@ import {
   IonCol,
   IonRow
 } from '@ionic/vue'
+import { computed } from 'vue'
 
 // store
 import { storeToRefs } from 'pinia'
@@ -21,24 +22,52 @@ const {
 } = storeToRefs(gameStore)
 
 /**
+ * computed
+ * ==================================================================
+ */
+const answerLetterCounts = computed(() => {
+  return getLetterCounts(answer.value)
+})
+
+/**
  * methods
  * ==================================================================
  */
+function getLetterCounts (word: string) {
+  return word.split('').reduce((letterCounts, letter) => {
+    if (letter in letterCounts) {
+      letterCounts[letter]++
+    } else {
+      letterCounts[letter] = 1
+    }
+    return letterCounts
+  }, {} as { [key: string]: number })
+}
+
 function getTileClass (
   guess: string, 
   letterIndex: number, 
   wordIndex: number
 ) {
+  const currentGuessLetter = guess[letterIndex - 1]
+
   if (guess && (wordIndex < guessCount.value)) {
-    if (answer.value[letterIndex - 1] === guess[letterIndex - 1]) {
+    if (answer.value[letterIndex - 1] === currentGuessLetter) {
       return 'success'
-    } else if (answer.value.includes(guess[letterIndex - 1])) {
+    } else if (
+      answer.value.includes(currentGuessLetter) &&
+      (
+        answerLetterCounts.value[currentGuessLetter] >=
+        getLetterCounts(guess)[currentGuessLetter]
+      )
+    ) {
       return 'warning'
     } else { 
       return 'fill'
     }
   }
-  if (guess[letterIndex - 1]) {
+  
+  if (currentGuessLetter) {
     return 'outline'
   }
 }
