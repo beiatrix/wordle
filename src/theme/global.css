@@ -1,12 +1,32 @@
-ion-toast.custom-toast {
-  --background: var(--ion-color-danger);
+ion-toast {
   --border-radius: 0.5rem;
   --height: 4rem;
   --width: 300px;
   font-family: 'Karla', sans-serif;
 }
 
-ion-toast.custom-toast::part(message) {
-  font-size: 1.25rem;
+ion-toast::part(message) {
   margin: auto;
+}
+
+ion-toast.default-toast {
+  --background: var(--ion-color-dark);
+}
+
+ion-toast.default-toast::part(message),
+ion-toast.success-toast::part(message) {
+  font-size: 1.75rem;
+  letter-spacing: 0.1rem;
+}
+
+ion-toast.success-toast {
+  --background: var(--ion-color-forest-tint);
+}
+
+ion-toast.error-toast {
+  --background: var(--ion-color-danger);
+}
+
+ion-toast.error-toast::part(message) {
+  font-size: 1.25rem;
 }

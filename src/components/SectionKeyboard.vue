@@ -8,7 +8,7 @@ import {
   toastController
 } from '@ionic/vue'
 import { backspace } from 'ionicons/icons'
-import { ref } from 'vue'
+import { onBeforeUnmount, ref } from 'vue'
 
 // config
 import { keyboard } from '@/config/keyboard'
@@ -35,6 +35,7 @@ const {
  */
 const guessedLetters = ref('')
 const partiallyCorrectLetters = ref('')
+const timeout = ref<ReturnType<typeof setTimeout> | undefined>(undefined)
 const totallyCorrectLetters = ref('')
 
 /**
@@ -58,12 +59,15 @@ function getButtonClass (
   }
 }
 
-async function presentToast (message: string) {
+async function presentToast (
+  message: string,
+  type: 'default' | 'error' | 'success' = 'default'
+) {
   const toast = await toastController.create({
     message,
     position: 'middle',
     duration: 1500, 
-    cssClass: 'custom-toast'
+    cssClass: `${type}-toast`
   })
 
   await toast.present()
@@ -86,17 +90,20 @@ async function lookupWord (word: string) {
 }
 
 async function submitGuess () {
+  // check if not enough letters
   if (currentGuess.value?.length < 5) {
-    await presentToast('Not enough letters')
+    await presentToast('Not enough letters', 'error')
     return
   }
 
+  // check if not a real word
   const isWord = await lookupWord(currentGuess.value)
   if (!isWord) {
-    await presentToast('Not in word list')
+    await presentToast('Not in word list', 'error')
     return 
   }
   
+  // check correctness of guess
   for (let i = 0; i < 5; i++) {
     const currentLetter = currentGuess.value[i]
     if (
@@ -107,7 +114,7 @@ async function submitGuess () {
       totallyCorrectLetters.value += currentLetter
       partiallyCorrectLetters.value = partiallyCorrectLetters.value.replace(
         currentLetter, ''
-      ) 
+      )
     } else if (
       // partially correct guess
       answer.value.includes(currentLetter) &&
@@ -117,7 +124,23 @@ async function submitGuess () {
       partiallyCorrectLetters.value += currentLetter
     }
   }
+
+  // game over - lose
+  if (guessCount.value === 5 && (
+    currentGuess.value !== answer.value
+  )) {
+    await presentToast(answer.value)
+    return 
+  }
   
+  // game over - win
+  if (currentGuess.value === answer.value) {
+    timeout.value = setTimeout(async () => {
+      await presentToast('You won!', 'success')
+    }, 300)
+  }
+
+  // continue game
   guessedLetters.value += currentGuess.value
   guessCount.value++
 }
@@ -135,6 +158,14 @@ function updateCurrentGuess (letter: string) {
     guesses.value[guessCount.value] = currentGuess.value + letter
   }
 }
+
+/**
+ * lifecycle hook
+ * ==================================================================
+*/
+onBeforeUnmount(() => {
+  clearTimeout(timeout.value)
+})
 </script>
 
 <template>
