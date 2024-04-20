@@ -41,20 +41,20 @@ const totallyCorrectLetters = ref('')
  * methods
  * ==================================================================
  */
-function getButtonColor (
+function getButtonClass (
   letter: string
 ) {
   if (totallyCorrectLetters.value.includes(letter)) {
-    return 'jade'
+    return 'success'
   } else if (partiallyCorrectLetters.value.includes(letter)) {
-    return 'mustard'
+    return 'warning'
   } else if (
     !answer.value.includes(letter) && 
     guessedLetters.value.includes(letter)
   ) {
-    return 'taupe-grey'
+    return 'fill'
   } else {
-    return 'almond'
+    return 'default'
   }
 }
 
@@ -145,8 +145,7 @@ function updateCurrentGuess (letter: string) {
     >
       <ion-button 
         v-for="letter in row"
-        :color="getButtonColor(letter)"
-        class="btn-letter"
+        :class="`btn-letter ${getButtonClass(letter)}`"
         @click="updateCurrentGuess(letter)"
       >
         {{ letter }}
@@ -182,6 +181,25 @@ function updateCurrentGuess (letter: string) {
 ion-button {
   --border-radius: 0.25rem;
   --box-shadow: none;
+}
+
+ion-button.fill {
+  --background: var(--ion-color-taupe-grey);
+  color: var(--ion-color-light);
+}
+
+ion-button.success {
+  --background: var(--ion-color-jade);
+  color: var(--ion-color-forest);
+}
+
+ion-button.warning {
+  --background: var(--ion-color-mustard);
+  color: var(--ion-color-primary);
+}
+
+ion-button.default {
+  --background: var(--ion-color-almond);
 }
 
 .btn-letter {
