@@ -26,17 +26,18 @@ const {
   answer,
   currentGuess,
   guessCount,
-  guesses
+  guessedLetters,
+  guesses,
+  isGameComplete,
+  partiallyCorrectLetters,
+  totallyCorrectLetters
 } = storeToRefs(gameStore)
 
 /**
  * state
  * ==================================================================
  */
-const guessedLetters = ref('')
-const partiallyCorrectLetters = ref('')
 const timeout = ref<ReturnType<typeof setTimeout> | undefined>(undefined)
-const totallyCorrectLetters = ref('')
 
 /**
  * methods
@@ -66,7 +67,7 @@ async function presentToast (
   const toast = await toastController.create({
     message,
     position: 'middle',
-    duration: 1500, 
+    duration: 800, 
     cssClass: `${type}-toast`
   })
 
@@ -130,6 +131,7 @@ async function submitGuess () {
     currentGuess.value !== answer.value
   )) {
     await presentToast(answer.value)
+    isGameComplete.value = true
     return 
   }
   
@@ -137,6 +139,7 @@ async function submitGuess () {
   if (currentGuess.value === answer.value) {
     timeout.value = setTimeout(async () => {
       await presentToast('You won!', 'success')
+      isGameComplete.value = true
     }, 300)
   }
 

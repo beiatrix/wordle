@@ -5,8 +5,10 @@ import {
   IonContent, 
   IonGrid,
   IonPage, 
-  IonRow
+  IonRow,
+  alertController
 } from '@ionic/vue'
+import { onBeforeUnmount, ref, watch } from 'vue'
 
 // components
 import AppBar from '@/components/AppBar.vue'
@@ -17,15 +19,80 @@ import SectionTiles from '@/components/SectionTiles.vue'
 import { useGameStore } from '@/store/game'
 import { storeToRefs } from 'pinia'
 
+/**
+ * store
+ * ==================================================================
+ */
 const gameStore = useGameStore()
-const { answer } = storeToRefs(gameStore)
+const { 
+  answer,
+  isGameComplete
+} = storeToRefs(gameStore)
 
+/**
+ * setup
+ * ==================================================================
+ */
 gameStore.generateAnswer()
+
+/**
+ * state
+ * ==================================================================
+ */
+const timeout = ref<ReturnType<typeof setTimeout> | undefined>(undefined)
+
+async function presentAlert () {
+  const alert = await alertController.create({
+    header: 'Play again?',
+    backdropDismiss: false,
+    buttons: [{
+      cssClass: 'alert-button',
+      role: 'confirm',
+      text: 'OK',
+      handler: () => {
+        gameStore.resetGame()
+      }
+    }],
+    cssClass: 'alert',
+    mode: 'ios'
+  })
+
+  await alert.present()
+}
+
+/**
+ * watcher
+ * ==================================================================
+ */
+watch(isGameComplete, async (newVal) => {
+  if (newVal) {
+    timeout.value = setTimeout(async () => {
+      await presentAlert()
+    }, 1000)
+  }
+})
+
 
 /**
  * @todo delete
  */
-console.log('gamesStore', answer.value)
+watch(
+  answer, 
+  (newVal) => {
+    console.log('answer:', newVal)
+  },
+  { 
+    immediate: true
+  }
+)
+
+/**
+ * lifecycle hook
+ * ==================================================================
+*/
+onBeforeUnmount(() => {
+  clearTimeout(timeout.value)
+})
 </script>
 
 <template>

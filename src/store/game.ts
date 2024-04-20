@@ -9,6 +9,7 @@ export const useGameStore = defineStore('game', () => {
    */
   const answer = ref('')
   const guessCount = ref(0)
+  const guessedLetters = ref('')
   const guesses = ref<{ [key: number]: string }>({
     0: '',
     1: '',
@@ -17,6 +18,9 @@ export const useGameStore = defineStore('game', () => {
     4: '',
     5: ''
   })
+  const isGameComplete = ref(false)
+  const partiallyCorrectLetters = ref('')
+  const totallyCorrectLetters = ref('')
 
   /**
    * getters
@@ -37,11 +41,35 @@ export const useGameStore = defineStore('game', () => {
     answer.value = _answer.toUpperCase()
   }
 
+  function resetGame () {
+    answer.value = ''
+    guessCount.value = 0
+    guessedLetters.value = ''
+    guesses.value = {
+      0: '',
+      1: '',
+      2: '',
+      3: '',
+      4: '',
+      5: ''
+    }
+    isGameComplete.value = false
+    partiallyCorrectLetters.value = ''
+    totallyCorrectLetters.value = ''
+
+    generateAnswer()
+  }
+
   return {
     answer,
     currentGuess,
     generateAnswer,
     guessCount,
-    guesses
+    guessedLetters,
+    guesses,
+    isGameComplete,
+    partiallyCorrectLetters,
+    resetGame,
+    totallyCorrectLetters
   }
 })

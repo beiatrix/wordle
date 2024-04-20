@@ -1,3 +1,4 @@
+/* toast */
 ion-toast {
   --border-radius: 0.5rem;
   --height: 4rem;
@@ -30,3 +31,20 @@ ion-toast.error-toast {
 ion-toast.error-toast::part(message) {
   font-size: 1.25rem;
 }
+
+/* alert */
+.alert {
+  --background: var(--ion-color-platinum);
+  font-family: 'Karla', sans-serif;
+  border-radius: 0.5rem;
+}
+
+.alert button.alert-button {
+  background-color: var(--ion-color-hunter);
+  color: var(--ion-color-light);
+  font-family: 'Karla', sans-serif;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+  margin: 0 1rem 1rem 1rem;
+}
+
