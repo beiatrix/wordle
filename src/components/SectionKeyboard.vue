@@ -211,19 +211,20 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .row-keyboard {
-  height: 24%;
+  height: 23%;
   padding: 0.5rem;
   display: flex;
   justify-content: center;
 }
 
 .row-submit {
-  height: 28%;
+  height: 31%;
   padding: 0.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
 ion-button {
   --border-radius: 0.25rem;
   --box-shadow: none;
@@ -271,14 +272,11 @@ ion-button.default {
   color: var(--ion-color-forest);
 }
 
+/* vertical responsiveness */
 @media (max-height: 45rem) {
   .btn-letter, .btn-backspace {
     margin: 0 0.5rem;
     font-size: 0.8rem;
-  }
-
-  .btn-letter {
-    width: 1rem;
   }
 
   .btn-submit {
@@ -301,4 +299,32 @@ ion-button.default {
   }
 }
 
+/* horizontal responsiveness */
+@media (max-width: 35rem) {
+  .row-keyboard {
+    height: 22%;
+  }
+
+  .btn-letter, .btn-backspace {
+    font-size: 1.1rem;
+  }
+  
+  .btn-letter {
+    margin-right: 1.5rem;
+  }
+}
+
+@media (max-width: 27.5rem) {
+  .row-keyboard {
+    height: 21%;
+  }
+
+  .btn-letter, .btn-backspace {
+    font-size: 1rem;
+  }
+  
+  .btn-letter {
+    margin-right: 1.25rem;
+  }
+}
 </style>

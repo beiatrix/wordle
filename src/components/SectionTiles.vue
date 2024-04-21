@@ -97,8 +97,8 @@ function getTileClass (
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 4rem;
-  width: 4rem;
+  height: 3.75rem;
+  width: 3.75rem;
   background-color: rgba(var(--ion-color-taupe-grey-rgb), 0.5);
   border-radius: 0.25rem;
   margin: 0.25rem;
@@ -127,11 +127,12 @@ function getTileClass (
   color: var(--ion-color-primary);
 }
 
+/* vertical responsiveness */
 @media (max-height: 50rem) {
   .box {
     height: 3rem;
     width: 3rem;
-    font-size: 1rem;
+    font-size: 1.75rem;
   }
 }
 
@@ -140,7 +141,7 @@ function getTileClass (
     height: 2.5rem;
     width: 2.5rem;
     margin: 0.15rem;
-    font-size: 1rem;
+    font-size: 1.5rem;
   }
 }
 
@@ -148,8 +149,8 @@ function getTileClass (
   .box {
     height: 2.25rem;
     width: 2.25rem;
-    font-size: 1rem;
     border-radius: 0.15rem;
+    font-size: 1.25rem;
   }
 }
 
@@ -166,7 +167,21 @@ function getTileClass (
     height: 1.5rem;
     width: 1.5rem;
     margin: 0.1rem;
-    font-size: 1rem;
+  }
+}
+
+/* horizontal responsiveness */
+@media (max-width: 35rem) {
+  .box {
+    height: 3.5rem;
+    width: 3.5rem;
+  }
+}
+
+@media (max-width: 27.5rem) {
+  .box {
+    height: 3rem;
+    width: 3rem;
   }
 }
 </style>
