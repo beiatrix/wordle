@@ -9,11 +9,11 @@ import {
 
 <template>
   <ion-header
-    class="ion-no-border ion-margin-bottom"
+    class="ion-no-border"
     :translucent="true"
   >
     <ion-toolbar color="hunter">
-      <ion-title class="ion-text-center ion-margin">
+      <ion-title class="ion-text-center">
         Wordle
       </ion-title>
     </ion-toolbar>
@@ -26,5 +26,24 @@ ion-title {
   font-size: 2rem;
   font-weight: 700;
   color: var(--ion-color-forest);
+  margin: 1rem;
+}
+
+@media (max-height: 45rem) {
+  ion-title {
+    margin: 0.5rem;
+  }
+}
+
+@media (max-height: 35rem) {
+  ion-title {
+    font-size: 1.5rem;
+    margin: 0;
+    margin-top: -0.5rem;
+  }
+
+  ion-toolbar {
+    height: 3rem;
+  }
 }
 </style>

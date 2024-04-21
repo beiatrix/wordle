@@ -74,7 +74,7 @@ function getTileClass (
 </script>
 
 <template>
-  <ion-row>
+  <div>
     <ion-col
       v-for="(guess, wordIndex) in guesses"
       class="ion-no-padding"
@@ -89,7 +89,7 @@ function getTileClass (
         </div>
       </ion-row>
     </ion-col>
-  </ion-row>
+  </div>
 </template>
 
 <style scoped>
@@ -97,8 +97,8 @@ function getTileClass (
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 3.75rem;
-  width: 3.75rem;
+  height: 4rem;
+  width: 4rem;
   background-color: rgba(var(--ion-color-taupe-grey-rgb), 0.5);
   border-radius: 0.25rem;
   margin: 0.25rem;
@@ -125,5 +125,48 @@ function getTileClass (
 .warning {
   background-color: var(--ion-color-mustard);
   color: var(--ion-color-primary);
+}
+
+@media (max-height: 50rem) {
+  .box {
+    height: 3rem;
+    width: 3rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-height: 40rem) {
+  .box {
+    height: 2.5rem;
+    width: 2.5rem;
+    margin: 0.15rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-height: 35rem) {
+  .box {
+    height: 2.25rem;
+    width: 2.25rem;
+    font-size: 1rem;
+    border-radius: 0.15rem;
+  }
+}
+
+@media (max-height: 30rem) {
+  .box {
+    height: 1.75rem;
+    width: 1.75rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-height: 25rem) {
+  .box {
+    height: 1.5rem;
+    width: 1.5rem;
+    margin: 0.1rem;
+    font-size: 1rem;
+  }
 }
 </style>

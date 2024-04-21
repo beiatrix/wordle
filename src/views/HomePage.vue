@@ -105,13 +105,13 @@ onBeforeUnmount(() => {
           <ion-col
             class="col"
             size="12"
-            size-sm="10"
-            size-md="9"
-            size-lg="8"
-            size-xl="6"
           >
-            <SectionTiles />
-            <SectionKeyboard />
+            <div class="section-tiles">
+              <SectionTiles />
+            </div>
+            <div class="section-keyboard">
+              <SectionKeyboard />
+            </div>
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -122,7 +122,8 @@ onBeforeUnmount(() => {
 <style scoped>
 .container {
   text-align: center;
-  height: 100%;
+  height: calc(100vh - 4rem);
+  padding: 0;
 }
 
 .row {
@@ -134,5 +135,16 @@ onBeforeUnmount(() => {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+}
+
+.section-tiles {
+  height: 60%; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.section-keyboard {
+  height: 40%;
 }
 </style>

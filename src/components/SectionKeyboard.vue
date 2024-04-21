@@ -172,9 +172,10 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <ion-row>
-    <ion-col
+  <div style="height: 100%;">
+    <div
       v-for="(row, index) of keyboard"
+      class="row-keyboard"
       size="12"
     >
       <ion-button 
@@ -195,23 +196,34 @@ onBeforeUnmount(() => {
           color="primary"
         />
       </ion-button>
-    </ion-col>
-    <ion-col
-      class="ion-padding"
-      size="12"
-    >
+    </div>
+    <div size="12" class="row-submit">
       <ion-button
         color="success"
-        class="submit"
+        class="btn-submit"
         @click="submitGuess()"
       >
         Submit
       </ion-button>
-    </ion-col>
-  </ion-row>
+    </div>
+  </div>
 </template>
 
 <style scoped>
+.row-keyboard {
+  height: 24%;
+  padding: 0.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.row-submit {
+  height: 28%;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 ion-button {
   --border-radius: 0.25rem;
   --box-shadow: none;
@@ -237,9 +249,9 @@ ion-button.default {
 }
 
 .btn-letter {
-  margin: 0 0.5rem;
-  height: 3.5rem;
-  width: 2rem;
+  margin-right: 2rem;
+  height: 100%;
+  width: 1rem;
   font-family: 'Inter', sans-serif;
   font-size: 1.25rem;
   font-weight: 700;
@@ -247,16 +259,46 @@ ion-button.default {
 }
 
 .btn-backspace {
-  margin: 0 0.5rem;
-  height: 3.5rem;
+  height: 100%;
 }
 
-.submit {
-  height: 3.5rem;
+.btn-submit {
+  height: 80%;
   font-family: 'Karla', sans-serif;
   font-size: 2rem;
   font-weight: 700;
   text-transform: uppercase;
   color: var(--ion-color-forest);
 }
+
+@media (max-height: 45rem) {
+  .btn-letter, .btn-backspace {
+    margin: 0 0.5rem;
+    font-size: 0.8rem;
+  }
+
+  .btn-letter {
+    width: 1rem;
+  }
+
+  .btn-submit {
+    font-size: 1rem;
+  }
+}
+
+@media (max-height: 32.5rem) {
+  .btn-letter, .btn-backspace {
+    margin: 0 0.5rem;
+    font-size: 0.75rem;
+  }
+
+  .btn-letter {
+    width: 0.75rem;
+  }
+
+  .btn-submit {
+    font-size: 0.85rem;
+  }
+}
+
 </style>
