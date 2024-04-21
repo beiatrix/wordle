@@ -12,6 +12,7 @@ import { onBeforeUnmount, ref, watch } from 'vue'
 
 // components
 import AppBar from '@/components/AppBar.vue'
+import ModalInstructions from '@/components/ModalInstructions.vue'
 import SectionKeyboard from '@/components/SectionKeyboard.vue'
 import SectionTiles from '@/components/SectionTiles.vue'
 
@@ -112,6 +113,7 @@ onBeforeUnmount(() => {
             <div class="section-keyboard">
               <SectionKeyboard />
             </div>
+            <ModalInstructions />
           </ion-col>
         </ion-row>
       </ion-grid>
