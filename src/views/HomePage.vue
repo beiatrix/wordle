@@ -25,25 +25,20 @@ import { storeToRefs } from 'pinia'
  * ==================================================================
  */
 const gameStore = useGameStore()
-const { 
-  answer,
-  isGameComplete
-} = storeToRefs(gameStore)
-
-/**
- * setup
- * ==================================================================
- */
-gameStore.generateAnswer()
+const { isGameComplete } = storeToRefs(gameStore)
 
 /**
  * state
  * ==================================================================
  */
-const timeout = ref<ReturnType<typeof setTimeout> | undefined>(undefined)
+const isAlertOpen = ref(false)
+const isInstructionsModalOpen = ref(true)
+const alertTimeout = ref<ReturnType<typeof setTimeout> | undefined>(undefined)
+
+let alert: HTMLIonAlertElement
 
 async function presentAlert () {
-  const alert = await alertController.create({
+  alert = await alertController.create({
     header: 'Play again?',
     backdropDismiss: false,
     buttons: [{
@@ -52,12 +47,14 @@ async function presentAlert () {
       text: 'OK',
       handler: () => {
         gameStore.resetGame()
+        isAlertOpen.value = false
       }
     }],
     cssClass: 'alert',
     mode: 'ios'
   })
 
+  isAlertOpen.value = true
   await alert.present()
 }
 
@@ -67,32 +64,60 @@ async function presentAlert () {
  */
 watch(isGameComplete, async (newVal) => {
   if (newVal) {
-    timeout.value = setTimeout(async () => {
+    alertTimeout.value = setTimeout(async () => {
       await presentAlert()
     }, 1000)
   }
 })
 
-
 /**
- * @todo delete
+ * setup
+ * ==================================================================
  */
-watch(
-  answer, 
-  (newVal) => {
-    console.log('answer:', newVal)
-  },
-  { 
-    immediate: true
+// setup winning word
+gameStore.generateAnswer()
+
+// keyboard listener
+document.addEventListener('keydown', async function (event) {
+  if (isInstructionsModalOpen.value) {
+    return
   }
-)
+  
+  const key = event.key
+
+  // play again alert
+  if (isAlertOpen.value) {
+    if (key === 'Enter') {
+      gameStore.resetGame()
+      await alert.dismiss()
+      isAlertOpen.value = false
+      return
+    }
+  }
+
+  // backspace key
+  if (key === 'Backspace') {
+    gameStore.updateCurrentGuess('')
+    return
+  }
+  // enter key
+  if (key === 'Enter') {
+    gameStore.submitGuess()
+    return
+  }
+  // key is an alphabet letter (A-Z)
+  if (key.length === 1 && /[a-zA-Z]/.test(key)) {
+    gameStore.updateCurrentGuess(key.toUpperCase())
+    return
+  }
+})
 
 /**
  * lifecycle hook
  * ==================================================================
 */
 onBeforeUnmount(() => {
-  clearTimeout(timeout.value)
+  clearTimeout(alertTimeout.value)
 })
 </script>
 
@@ -113,7 +138,10 @@ onBeforeUnmount(() => {
             <div class="section-keyboard">
               <SectionKeyboard />
             </div>
-            <ModalInstructions />
+            <ModalInstructions 
+              :is-open="isInstructionsModalOpen"
+              @close="isInstructionsModalOpen = false"
+            />
           </ion-col>
         </ion-row>
       </ion-grid>

@@ -15,6 +15,24 @@ import { close } from 'ionicons/icons'
 import { ref } from 'vue'
 
 /**
+ * props
+ * ==================================================================
+ */
+interface Props {
+  isOpen?: boolean
+}
+
+withDefaults(defineProps<Props>(), {
+  isOpen: false
+})
+
+/**
+ * emitted events
+ * ==================================================================
+ */
+const emit = defineEmits(['close'])
+
+/**
  * state
  * ==================================================================
  */
@@ -24,12 +42,11 @@ const modal = ref()
  * methods
  * ==================================================================
  */
-function confirm () { 
-  modal.value.$el.dismiss(null, 'confirm')
+function closeDialog () { 
+  emit('close')
 }
 
 function getTileClass (letter: string) {
-  console.log('letter', letter)
   switch (letter) {
     case 'A': 
       return 'success'
@@ -43,9 +60,10 @@ function getTileClass (letter: string) {
 
 <template>
   <ion-modal
-    :is-open="true"
+    :is-open="isOpen"
     mode="ios"
     ref="modal"
+    @will-dismiss="closeDialog"
   >
     <ion-header class="ion-padding">
       <ion-toolbar 
@@ -56,7 +74,7 @@ function getTileClass (letter: string) {
         <ion-buttons slot="end">
           <ion-button 
             size="small" 
-            @click="confirm"
+            @click="closeDialog"
           >
             <ion-icon 
               slot="icon-only" 
