@@ -49,6 +49,10 @@ function getTileClass (
   letterIndex: number, 
   wordIndex: number
 ) {
+  if (wordIndex == guessCount.value) {
+    return 'current'
+  }
+
   const currentGuessLetter = guess[letterIndex - 1]
 
   if (guess && (wordIndex < guessCount.value)) {
@@ -83,7 +87,7 @@ function getTileClass (
       <ion-row class="ion-justify-content-center">
         <div
           v-for="letterIndex in 5"
-          :class="`box ${getTileClass(guess, letterIndex, wordIndex)}`"
+          :class="`tile ${getTileClass(guess, letterIndex, wordIndex)}`"
         >
           {{ guess[letterIndex - 1] }}
         </div>
@@ -93,7 +97,7 @@ function getTileClass (
 </template>
 
 <style scoped>
-.box {
+.tile {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -129,7 +133,7 @@ function getTileClass (
 
 /* vertical responsiveness */
 @media (max-height: 50rem) {
-  .box {
+  .tile {
     height: 3rem;
     width: 3rem;
     font-size: 1.75rem;
@@ -137,7 +141,7 @@ function getTileClass (
 }
 
 @media (max-height: 40rem) {
-  .box {
+  .tile {
     height: 2.5rem;
     width: 2.5rem;
     margin: 0.15rem;
@@ -146,7 +150,7 @@ function getTileClass (
 }
 
 @media (max-height: 35rem) {
-  .box {
+  .tile {
     height: 2.25rem;
     width: 2.25rem;
     border-radius: 0.15rem;
@@ -155,7 +159,7 @@ function getTileClass (
 }
 
 @media (max-height: 30rem) {
-  .box {
+  .tile {
     height: 1.75rem;
     width: 1.75rem;
     font-size: 1rem;
@@ -163,7 +167,7 @@ function getTileClass (
 }
 
 @media (max-height: 25rem) {
-  .box {
+  .tile {
     height: 1.5rem;
     width: 1.5rem;
     margin: 0.1rem;
@@ -172,14 +176,14 @@ function getTileClass (
 
 /* horizontal responsiveness */
 @media (max-width: 35rem) {
-  .box {
+  .tile {
     height: 3.5rem;
     width: 3.5rem;
   }
 }
 
 @media (max-width: 27.5rem) {
-  .box {
+  .tile {
     height: 3rem;
     width: 3rem;
   }

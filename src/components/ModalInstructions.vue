@@ -100,10 +100,10 @@ function getTileClass (letter: string) {
       </ion-item>
       <ion-item lines="none">
         <ion-label>
-          <div class="box-container">
+          <div class="tile-container">
             <div
               v-for="letter in 'DANCE'.split('')"
-              :class="`box ${getTileClass(letter)}`"
+              :class="`tile ${getTileClass(letter)}`"
             >
               {{ letter }}
             </div>
@@ -115,10 +115,10 @@ function getTileClass (letter: string) {
       </ion-item>
       <ion-item lines="none">
         <ion-label>
-          <div class="box-container">
+          <div class="tile-container">
             <div
               v-for="letter in 'CLOUD'.split('')"
-              :class="`box ${getTileClass(letter)}`"
+              :class="`tile ${getTileClass(letter)}`"
             >
               {{ letter }}
             </div>
@@ -130,10 +130,10 @@ function getTileClass (letter: string) {
       </ion-item>
       <ion-item lines="none">
         <ion-label>
-          <div class="box-container">
+          <div class="tile-container">
             <div
               v-for="letter in 'TIGER'.split('')"
-              :class="`box ${getTileClass(letter)}`"
+              :class="`tile ${getTileClass(letter)}`"
             >
               {{ letter }}
             </div>
@@ -174,13 +174,13 @@ p {
   font-family: 'Karla', sans-serif;
 }
 
-.box-container {
+.tile-container {
   width: 100%;
   display: flex;
   margin-bottom: 0.5rem;
 }
 
-.box {
+.tile {
   display: flex;
   justify-content: center;
   align-items: center;

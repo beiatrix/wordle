@@ -48,6 +48,40 @@ export const useGameStore = defineStore('game', () => {
     answer.value = _answer.toUpperCase()
   }
 
+  function animate (
+    selection: string,
+    animation: string
+  ) {
+    const prefix = 'animate__'
+
+    // We create a Promise and return it
+    new Promise((resolve, _reject) => {
+      const animationName = `${prefix}${animation}`
+      const tiles = document.querySelectorAll(selection)
+
+      tiles.forEach((tile) => {
+        tile.classList.add(`${prefix}animated`, animationName)
+      })
+
+      // When the animation ends, we clean the classes and resolve the Promise
+      function handleAnimationEnd (event: Event) {
+        event.stopPropagation()
+        tiles.forEach((tile) => {
+          tile.classList.remove(`${prefix}animated`, animationName)
+        })
+        resolve('Animation ended')
+      }
+
+      tiles.forEach((tile) => {
+        tile.addEventListener(
+          'animationend',
+          handleAnimationEnd,
+          { once: true }
+        )
+      })
+    })
+  }
+
   async function lookupWord (word: string) {
     try {
       const response = await fetch(
@@ -100,6 +134,7 @@ export const useGameStore = defineStore('game', () => {
   async function submitGuess () {
     // check if not enough letters
     if (currentGuess.value?.length < 5) {
+      animate('.current', 'headShake')
       await presentToast('Not enough letters', 'error')
       return
     }
@@ -107,6 +142,7 @@ export const useGameStore = defineStore('game', () => {
     // check if not a real word
     const isWord = await lookupWord(currentGuess.value)
     if (!isWord) {
+      animate('.current', 'headShake')
       await presentToast('Not in word list', 'error')
       return 
     }
