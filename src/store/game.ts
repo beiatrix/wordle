@@ -134,7 +134,7 @@ export const useGameStore = defineStore('game', () => {
   async function submitGuess () {
     // check if not enough letters
     if (currentGuess.value?.length < 5) {
-      animate('.current', 'headShake')
+      animate(`.row-${guessCount.value}`, 'headShake')
       await presentToast('Not enough letters', 'error')
       return
     }
@@ -142,7 +142,7 @@ export const useGameStore = defineStore('game', () => {
     // check if not a real word
     const isWord = await lookupWord(currentGuess.value)
     if (!isWord) {
-      animate('.current', 'headShake')
+      animate(`.row-${guessCount.value}`, 'headShake')
       await presentToast('Not in word list', 'error')
       return 
     }
@@ -181,6 +181,7 @@ export const useGameStore = defineStore('game', () => {
     // game over - win
     if (currentGuess.value === answer.value) {
       toastTimeout.value = setTimeout(async () => {
+        animate(`.row-${guessCount.value - 1}`, 'tada')
         await presentToast('You won!', 'success')
         isGameComplete.value = true
       }, 300)

@@ -49,10 +49,6 @@ function getTileClass (
   letterIndex: number, 
   wordIndex: number
 ) {
-  if (wordIndex == guessCount.value) {
-    return 'current'
-  }
-
   const currentGuessLetter = guess[letterIndex - 1]
 
   if (guess && (wordIndex < guessCount.value)) {
@@ -87,7 +83,7 @@ function getTileClass (
       <ion-row class="ion-justify-content-center">
         <div
           v-for="letterIndex in 5"
-          :class="`tile ${getTileClass(guess, letterIndex, wordIndex)}`"
+          :class="`tile row-${wordIndex} ${getTileClass(guess, letterIndex, wordIndex)}`"
         >
           {{ guess[letterIndex - 1] }}
         </div>
