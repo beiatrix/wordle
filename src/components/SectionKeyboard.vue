@@ -2,7 +2,9 @@
 // ionic + vue
 import {
   IonButton,
-  IonIcon
+  IonCol,
+  IonIcon,
+  IonRow
 } from '@ionic/vue'
 import { backspace } from 'ionicons/icons'
 
@@ -48,11 +50,13 @@ function getButtonClass (
 </script>
 
 <template>
-  <div style="height: 100%;">
-    <div
+  <ion-col
+    class="ion-no-padding"
+    style="height: 100%;"
+  >
+    <ion-row
       v-for="(row, index) of keyboard"
-      class="row-keyboard"
-      size="12"
+      class="row-keyboard ion-no-padding"
     >
       <ion-button 
         v-for="letter in row"
@@ -72,8 +76,8 @@ function getButtonClass (
           color="primary"
         />
       </ion-button>
-    </div>
-    <div size="12" class="row-submit">
+    </ion-row>
+    <ion-row class="row-submit ion-no-padding">
       <ion-button
         color="success"
         class="btn-submit"
@@ -81,13 +85,13 @@ function getButtonClass (
       >
         Submit
       </ion-button>
-    </div>
-  </div>
+    </ion-row>
+  </ion-col>
 </template>
 
 <style scoped>
 .row-keyboard {
-  height: 23%;
+  height: min(23%, 4.5rem);
   padding: 0.5rem;
   display: flex;
   justify-content: center;
@@ -140,7 +144,7 @@ ion-button.default {
 }
 
 .btn-submit {
-  height: 80%;
+  height: min(80%, 3rem);
   font-family: 'Karla', sans-serif;
   font-size: 2rem;
   font-weight: 700;
@@ -178,7 +182,7 @@ ion-button.default {
 /* horizontal responsiveness */
 @media (max-width: 35rem) {
   .row-keyboard {
-    height: 22%;
+    height: min(22%, 4rem);
   }
 
   .btn-letter, .btn-backspace {
@@ -192,7 +196,7 @@ ion-button.default {
 
 @media (max-width: 27.5rem) {
   .row-keyboard {
-    height: 21%;
+    height: min(21%, 4rem);
   }
 
   .btn-letter, .btn-backspace {
@@ -201,6 +205,24 @@ ion-button.default {
   
   .btn-letter {
     margin-right: 1.25rem;
+  }
+}
+
+@media (max-width: 25rem) {
+  .row-keyboard {
+    height: min(21%, 3rem);
+  }
+
+  .btn-letter, .btn-backspace {
+    font-size: 0.75rem;
+  }
+  
+  .btn-letter {
+    margin-right: 0.625rem;
+  }
+
+  .btn-submit {
+    font-size: 1rem;
   }
 }
 </style>

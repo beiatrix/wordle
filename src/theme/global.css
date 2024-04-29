@@ -3,6 +3,7 @@ ion-toast {
   --border-radius: 0.5rem;
   --height: 4rem;
   --width: 300px;
+  --color: var(--ion-color-light);
   font-family: 'Karla', sans-serif;
 }
 

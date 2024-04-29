@@ -79,21 +79,11 @@ gameStore.generateAnswer()
 
 // keyboard listener
 document.addEventListener('keydown', async function (event) {
-  if (isInstructionsModalOpen.value) {
+  if (isInstructionsModalOpen.value || isAlertOpen.value) {
     return
   }
   
   const key = event.key
-
-  // play again alert
-  if (isAlertOpen.value) {
-    if (key === 'Enter') {
-      gameStore.resetGame()
-      await alert.dismiss()
-      isAlertOpen.value = false
-      return
-    }
-  }
 
   // backspace key
   if (key === 'Backspace') {
@@ -132,12 +122,12 @@ onBeforeUnmount(() => {
             class="col"
             size="12"
           >
-            <div class="section-tiles">
+            <ion-row class="section-tiles">
               <SectionTiles />
-            </div>
-            <div class="section-keyboard">
+            </ion-row>
+            <ion-row class="section-keyboard">
               <SectionKeyboard />
-            </div>
+            </ion-row>
             <ModalInstructions 
               :is-open="isInstructionsModalOpen"
               @close="isInstructionsModalOpen = false"

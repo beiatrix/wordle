@@ -21,29 +21,24 @@ import {
 </template>
 
 <style scoped>
+ion-toolbar {
+  --min-height: 4rem;
+}
+
 ion-title {
   font-family: 'Karla', sans-serif;
   font-size: 2rem;
   font-weight: 700;
   color: var(--ion-color-forest);
-  margin: 1rem;
-}
-
-@media (max-height: 45rem) {
-  ion-title {
-    margin: 0.5rem;
-  }
 }
 
 @media (max-height: 35rem) {
   ion-title {
     font-size: 1.5rem;
-    margin: 0;
-    margin-top: -0.5rem;
   }
 
   ion-toolbar {
-    height: 3rem;
+    --min-height: 3rem;
   }
 }
 </style>
